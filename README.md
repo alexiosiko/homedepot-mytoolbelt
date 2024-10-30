@@ -1,4 +1,4 @@
-I made a simple clone for an simple solution to the problem
+I made a simple clone to a simple solution to a simple problem
 
 ## Problem
 Sequencing bays with articles is tedious work
@@ -16,3 +16,5 @@ npm run dev
 
 ## Frameworks
 
+Nextjs 15
+Shadcn-ui
