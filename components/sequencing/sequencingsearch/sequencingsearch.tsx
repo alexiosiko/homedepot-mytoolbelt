@@ -9,7 +9,7 @@ export default function SequencingSearch({ articles, handleSelectAll, selectedIn
 	articles: ArticleType[],
 	setSelectedIndexes: React.Dispatch<React.SetStateAction<Set<number>>>,
 	setArticles: React.Dispatch<React.SetStateAction<ArticleType[]>>,
-	handleSelectAll: (selectAll: Boolean) => void,
+	handleSelectAll: (selectAll: boolean) => void,
 	handleCheckboxChange: (index: number) => void,
 	selectedIndexes: Set<number>,
 }) {
@@ -22,13 +22,7 @@ export default function SequencingSearch({ articles, handleSelectAll, selectedIn
 			setInput(value);
 		}
 	};
-	const isInSearch = (num: number): boolean => {
-		articles.forEach(article => {
-			if (article.num.includes(String(num)))
-				return true;
-		})
-		return false;
-	}
+	
 	return (
 		<div className='w-full'>
 			<div className='flex justify-between sticky top-0 py-4 z-10 bg-background'>

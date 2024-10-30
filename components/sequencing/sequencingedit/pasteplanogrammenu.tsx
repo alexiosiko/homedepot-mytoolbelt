@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '../../ui/textarea';
 import { ArticleType } from '../hooks/useSequencing';
 import { toast } from '@/hooks/use-toast';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import Image from 'next/image';
 
 
@@ -24,14 +24,14 @@ export default function PastePlanogramMenu({ articles, setArticles }: {
 				
 			});
 			setDialogIsActive(false);
-		} catch (e: any) {
-			console.error(e);
+		} catch (e: unknown) {
+			const error = e as Error;
 			toast({
 				duration: 2500,
-				title: e.message,
+				title: error.message,
 				description: "Please try copying the data from planogram correctly.",
 				variant: "destructive",
-			})
+			});
 		}
 
 	}	
@@ -48,7 +48,7 @@ export default function PastePlanogramMenu({ articles, setArticles }: {
 					values[2] = Display // Style
 					values[3] = 1 // H facings
 			*/
-			let values = line.split(' '); // Split with each space 
+			const values = line.split(' '); // Split with each space 
 			// Skip because the line is invalid
 			if (values.length != 4)
 				return;
@@ -110,8 +110,6 @@ export default function PastePlanogramMenu({ articles, setArticles }: {
   )
 }
 
-
-const exmaple = "1 1001592723 Display 1\n2 1001814681 Display 1\n3 1793785Recip Display 1\n4 1793785ImpW... Display 1\n5 756113Recip Display 1\n6 1001725882 Display 1\n7 1725882Impact Display 1\n8 1001129757 Display 1\n9 1793785CircS... Display 1\n10 1793785Grinder Display 1\n11 756113CircSaw Display 1\n12 756113Grinder Display 1\n13 1001797887 Display 1\n14 1797887Impact Display 1\n15 1001633086 Display 1\n16 1001793785 Display 1\n17 1793785Impact Display 1\n18 1793785Flash... Display 1\n19 756113Impact Display 1\n20 1000756113 Display 1\n21 756113Flashli... Display 1\n22 1000755643 Display 1\n23 755643Impact... Display 1\n24 1001633086 Unit 1\n25 1001726414 Unit 1\n26 1001726415 Unit 1\n27 1001043525 Unit 1\n28 1001274331 Unit 1\n29 1001797886 Unit 1\n30 1000736181 Unit 1\n31 1000736182 Unit 1\n32 1001797887 Unit 1\n33 1000535182 Unit 1\n34 1001592723 Unit 1\n35 1001793785 Unit 1\n36 1001782651 Unit 1\n37 1000756113 Unit 2\n38 1001842738 Unit 1\n39 1001819252 Unit 1\n40 1001129757 Unit 1\n41 1001814681 Unit 1\n42 1001842739 Unit 1\n43 1001725882 Unit 1\n44 1000755643 Unit 1\n45 1001034137 Unit 1\n46 1000834425 Unit 1\n47 1001527747 Unit 1\n"
 
 const removeAllNaNs = (s: string): string => {
 	let newS = "";

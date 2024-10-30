@@ -1,6 +1,4 @@
 "use client"
-import { Input } from "@/components/ui/input"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import {
   Tabs,
   TabsContent,

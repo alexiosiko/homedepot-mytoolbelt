@@ -12,7 +12,7 @@ export default function SequencingEdit({ articles, selectedIndexes, setArticles,
 	selectedIndexes: Set<number>,
 	setArticles: React.Dispatch<React.SetStateAction<ArticleType[]>>,
 	setSelectedIndexes: React.Dispatch<React.SetStateAction<Set<number>>>,
-	handleSelectAll: (selectAll: Boolean) => void,
+	handleSelectAll: (selectAll: boolean) => void,
 	handleCheckboxChange: (index: number) => void,
 }) {
 	return (

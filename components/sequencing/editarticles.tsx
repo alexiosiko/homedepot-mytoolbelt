@@ -30,7 +30,7 @@ export default function EditArticles({ data, setData, selectedIndexes, setSelect
 
 	const saveChanges = () => {
 		selectedIndexes.forEach(index => {
-			let d = data[index];
+			const d = data[index];
 
 			// Copy
 			const newData: ArticleType = {

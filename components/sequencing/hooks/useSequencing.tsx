@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 
 export type ArticleType = {
@@ -13,7 +13,7 @@ export default function useSequencing() {
 	const handleEdit = () => {
 
 	}
-	const handleSelectAll = (selectAll: Boolean) => {
+	const handleSelectAll = (selectAll: boolean) => {
 		const newSet = new Set<number>();
 		if (selectAll) {
 			for (let i = 0; i < articles.length; i++)

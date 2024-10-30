@@ -18,11 +18,12 @@ export default function SequencingDelete({ setArticles, selectedIndexes, setSele
 				duration: 2500,
 			})
 			setSelectedIndexes(new Set());
-		} catch (e: any) {
+		} catch (e: unknown) {
+			const error = e as Error
 			toast({
 				duration: 2500,
 				title: "Error deleting articles.",
-				description: e.message,
+				description: error.message,
 				variant: "destructive",
 			})
 		}
