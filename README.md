@@ -16,5 +16,5 @@ npm run dev
 
 ## Frameworks
 
-Nextjs 15
+Nextjs15,
 Shadcn-ui
