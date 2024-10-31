@@ -32,7 +32,6 @@ export function Sequencing() {
 					setArticles={setArticles}
 					articles={articles}
 					handleCheckboxChange={handleCheckboxChange}
-					handleSelectAll={handleSelectAll}
 					selectedIndexes={selectedIndexes} />
 			</TabsContent>
     </Tabs>
