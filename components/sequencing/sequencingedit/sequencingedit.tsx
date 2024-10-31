@@ -28,7 +28,7 @@ export default function SequencingEdit({ articles, selectedIndexes, setArticles,
 			</div>
 			<Table>
 				<TableHeader>
-					<TableRow >
+					<TableRow  >
 						<TableHead><Input type="checkbox" className="w-4" onChange={(e) => handleSelectAll(e.target.checked)} /></TableHead>
 						<TableHead>Article #</TableHead>
 						<TableHead>Seq</TableHead>
@@ -39,8 +39,8 @@ export default function SequencingEdit({ articles, selectedIndexes, setArticles,
 				</TableHeader>
 				<TableBody>
 					{articles.map((data, index) => 
-					<TableRow key={index}>
-						<TableCell><Input type="checkbox" checked={selectedIndexes.has(index)} onChange={() => handleCheckboxChange(index)} className="w-4" /></TableCell>
+					<TableRow key={index} onClick={() => handleCheckboxChange(index)}>
+						<TableCell><Input type="checkbox" checked={selectedIndexes.has(index)} onChange={() => {}}  className="w-4" /></TableCell>
 						<TableCell>{data.num}</TableCell>
 						<TableCell>{index + 1}</TableCell>
 						<TableCell>{data.qty}</TableCell>

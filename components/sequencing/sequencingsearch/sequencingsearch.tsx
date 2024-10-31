@@ -5,11 +5,10 @@ import { ArticleType } from '../hooks/useSequencing'
 import SequencingDelete from '../sequencingdelete'
 import EditArticles from '../editarticles'
 
-export default function SequencingSearch({ articles, handleSelectAll, selectedIndexes, setArticles, handleCheckboxChange, setSelectedIndexes }: {
+export default function SequencingSearch({ articles, selectedIndexes, setArticles, handleCheckboxChange, setSelectedIndexes }: {
 	articles: ArticleType[],
 	setSelectedIndexes: React.Dispatch<React.SetStateAction<Set<number>>>,
 	setArticles: React.Dispatch<React.SetStateAction<ArticleType[]>>,
-	handleSelectAll: (selectAll: boolean) => void,
 	handleCheckboxChange: (index: number) => void,
 	selectedIndexes: Set<number>,
 }) {
@@ -22,7 +21,19 @@ export default function SequencingSearch({ articles, handleSelectAll, selectedIn
 			setInput(value);
 		}
 	};
-	
+	const handleSelectAll = (checked: boolean) => {
+		const newSet = new Set<number>();
+		if (checked) {
+			articles.forEach((article, index) => {
+				// Filter
+				if (input != null && !article.num.includes(String(input)))
+					return;
+
+				newSet.add(index);
+			})
+		}
+		setSelectedIndexes(newSet);
+	}
 	return (
 		<div className='w-full'>
 			<div className='flex justify-between sticky top-0 py-4 z-10 bg-background'>
@@ -53,8 +64,8 @@ export default function SequencingSearch({ articles, handleSelectAll, selectedIn
 						if (input != null && !data.num.includes(String(input)))
 							return;
 						return (
-							<TableRow key={index}>
-								<TableCell><Input type="checkbox" checked={selectedIndexes.has(index)} onChange={() => handleCheckboxChange(index)} className="w-4" /></TableCell>
+							<TableRow onClick={() => handleCheckboxChange(index)} key={index}>
+								<TableCell><Input type="checkbox" checked={selectedIndexes.has(index)} onChange={() => {}}  className="w-4" /></TableCell>
 								<TableCell>{data.num}</TableCell>
 								<TableCell>{index + 1}</TableCell>
 								<TableCell>{data.qty}</TableCell>
