@@ -10,6 +10,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarTrigger,
 } from "@/components/ui/sidebar"
 
 // Menu items.
@@ -27,35 +28,36 @@ const items = [
 
   {
     title: "Planogram",
-    url: "/planogram.pdf",
+    url: "/files/planogram.pdf",
     icon: Package,
   },
 
 ]
 
 export function AppSidebar() {
-  return (
+	return (
+
     <Sidebar>
 		<SidebarHeader />
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
-          <SidebarGroupContent>
-			<SidebarMenu>
-			{items.map((item) => (
-				<SidebarMenuItem key={item.title}>
-				<SidebarMenuButton asChild>
-					<a href={item.url} target={item.title === "Planogram" ? "_blank" : "_self"} rel="noopener noreferrer">
-					<item.icon />
-					<span>{item.title}</span>
-					</a>
-				</SidebarMenuButton>
-				</SidebarMenuItem>
-			))}
-			</SidebarMenu>
-			</SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
+		<SidebarContent>
+			<SidebarGroup>
+			<SidebarGroupLabel>Application</SidebarGroupLabel>
+			<SidebarGroupContent>
+				<SidebarMenu>
+				{items.map((item) => (
+					<SidebarMenuItem key={item.title}>
+					<SidebarMenuButton asChild>
+						<a href={item.url} target={item.title === "Planogram" ? "_blank" : "_self"} rel="noopener noreferrer">
+							<item.icon />
+							<span>{item.title}</span>
+						</a>
+					</SidebarMenuButton>
+					</SidebarMenuItem>
+				))}
+				</SidebarMenu>
+				</SidebarGroupContent>
+			</SidebarGroup>
+		</SidebarContent>
     </Sidebar>
   )
 }

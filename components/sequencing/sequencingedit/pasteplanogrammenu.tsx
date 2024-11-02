@@ -17,11 +17,10 @@ export default function PastePlanogramMenu({ articles, setArticles }: {
 	const [input, setInput] = useState<string>("");
 	const handlePaste = () => {
 		try {
-			tryFormatPlanogram();
+			const count = tryFormatPlanogram();
 			toast({
 				duration: 2500,
-				title: "Successfully pasted planogram data.",
-				
+				title: `Successfully pasted ${count} articles.`,
 			});
 			setDialogIsActive(false);
 		} catch (e: unknown) {
@@ -35,34 +34,25 @@ export default function PastePlanogramMenu({ articles, setArticles }: {
 		}
 
 	}	
-	const tryFormatPlanogram = () => {
-		const linesArray = input.split("\n") // Split input by new lines
-		linesArray.forEach(line => {
-			/*
-				Example input:
-					1 1001592723 Display 1
+	const tryFormatPlanogram = (): number => {
+		let count = 0;
+		const values = input.split(" ") // Split input by gaps
+		values.forEach(value => {
+			value = removeAllNaNs(value);
 
-				Example output:
-					values[0] = 1 // ID
-					values[1] = 1001592723 // Num
-					values[2] = Display // Style
-					values[3] = 1 // H facings
-			*/
-			const values = line.split(' '); // Split with each space 
-			// Skip because the line is invalid
-			if (values.length != 4)
+
+			if (value.length == 6) // 1670445 -> 1001670445
+				value = "1000" + value;
+			else if (value.length == 7) // 650203 -> 1000650203
+				value = "100" + value;
+			else if (value.length != 10) // Not valud
 				return;
 
-			// Format article nums
-			values[1] = removeAllNaNs(values[1]);
-			if (values[1].length == 7)
-				values[1] = '100' + values[1];
-			else if (values[1].length == 6)
-				values[1] = '1000' + values[1];
+			count++;
 
 			const article: ArticleType = {
-				num: values[1],
-				qty: values[3],
+				num: value,
+				qty: "1",
 				label: "Regular BC",
 				flag: "None",
 			};
@@ -70,6 +60,7 @@ export default function PastePlanogramMenu({ articles, setArticles }: {
 			articles.push(article);
 		});
 		setArticles([...articles]); // Re-render component
+		return count;
 	}
   return (
 	<Dialog open={dialogIsActive}>
@@ -81,23 +72,7 @@ export default function PastePlanogramMenu({ articles, setArticles }: {
 				<DialogTitle>Paste Planogram Data</DialogTitle>
 				<DialogDescription >
 						Paste planogram from top left of article list (id 1) to bottom right of last h-facing.
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<Button variant="link">Hover to See How</Button>
-						</TooltipTrigger>
-						<TooltipContent className='shadow-xl'>
-							1 1001592723 Display 1<br />
-							2 1001814681 Display 1<br />
-							3 1793785Recip Display 1<br />
-							4 1793785ImpW... Display 1<br />
-							5 756113Recip Display 1<br />
-							6 1001725882 Display 1<br />
-							7 1725882Impact Display 1<br />
-							<Image className='p-4' width={250} height={200} alt='reference-image.png' src="/images/pasteplanogramreference.png" />
-						</TooltipContent>
-						
-
-					</Tooltip>
+					
 					</DialogDescription>
 			</DialogHeader>
 			<Textarea value={input} onChange={(e) => setInput(e.target.value)} className='h-full' />
