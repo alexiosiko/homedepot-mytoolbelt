@@ -3,6 +3,7 @@ import { ArticleType } from '../hooks/useSequencing'
 import { Input } from '../../ui/input'
 import { Button } from '../../ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function SequenceInput({ setArticles, selectedIndexes }: {
 	selectedIndexes: Set<number>,
@@ -45,10 +46,12 @@ export default function SequenceInput({ setArticles, selectedIndexes }: {
 			return;
 		}
 		const newArticle: ArticleType = {
+			objectid: uuidv4(),
 			num: String(input),
 			qty: "1",
 			label: "Regular BC",
-			flag: "None"
+			flag: "None",
+			deleted: false,
 		};
 
 		if (index !== null)

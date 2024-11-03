@@ -59,12 +59,12 @@ export default function SequencingSearch({ articles, selectedIndexes, setArticle
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{articles.map((data, index) => {
+					{articles.filter(article => !article.deleted).map((data, index) => {
 						// Filter
 						if (input != null && !data.num.includes(String(input)))
 							return;
 						return (
-							<TableRow onClick={() => handleCheckboxChange(index)} key={index}>
+							<TableRow onClick={() => handleCheckboxChange(index)} key={data.objectid}>
 								<TableCell><Input type="checkbox" checked={selectedIndexes.has(index)} onChange={() => {}}  className="w-4" /></TableCell>
 								<TableCell>{data.num}</TableCell>
 								<TableCell>{index + 1}</TableCell>

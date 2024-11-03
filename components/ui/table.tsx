@@ -1,7 +1,7 @@
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
-
+import { AnimatePresence, motion, MotionProps } from 'framer-motion';
 const Table = React.forwardRef<
   HTMLTableElement,
   React.HTMLAttributes<HTMLTableElement>
@@ -27,12 +27,17 @@ TableHeader.displayName = "TableHeader"
 const TableBody = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, ref) => (
-  <tbody
-    ref={ref}
-    className={cn("[&_tr:last-child]:border-0", className)}
-    {...props}
-  />
+>(({ className, children, ...props }, ref) => (
+		<tbody
+			ref={ref}
+			className={cn("[&_tr:last-child]:border-0", className)}
+			{...props}
+			>
+				<AnimatePresence>
+
+				{children}
+				</AnimatePresence>
+			</tbody>
 ))
 TableBody.displayName = "TableBody"
 
@@ -53,9 +58,14 @@ TableFooter.displayName = "TableFooter"
 
 const TableRow = React.forwardRef<
   HTMLTableRowElement,
-  React.HTMLAttributes<HTMLTableRowElement>
+  React.HTMLAttributes<HTMLTableRowElement> & MotionProps
 >(({ className, ...props }, ref) => (
-  <tr
+  <motion.tr
+  	layout="position"
+  	initial={{ opacity: 0, y: 1 }}
+	animate={{ opacity: 1, y: 0 }}
+	exit={{ opacity: 0, y: 1 }}
+	transition={{ duration: 0.1 }}
     ref={ref}
     className={cn(
       "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
@@ -63,7 +73,8 @@ const TableRow = React.forwardRef<
     )}
     {...props}
   />
-))
+));
+
 TableRow.displayName = "TableRow"
 
 const TableHead = React.forwardRef<

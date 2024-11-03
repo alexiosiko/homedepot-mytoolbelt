@@ -6,6 +6,7 @@ import PastePlanogramMenu from './pasteplanogrammenu'
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '../../ui/table'
 import { Input } from '../../ui/input'
 import { ArticleType } from '../hooks/useSequencing'
+import { AnimatePresence } from 'framer-motion'
 
 export default function SequencingEdit({ articles, selectedIndexes, setArticles, setSelectedIndexes, handleSelectAll, handleCheckboxChange}: {
 	articles: ArticleType[],
@@ -38,8 +39,8 @@ export default function SequencingEdit({ articles, selectedIndexes, setArticles,
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{articles.map((data, index) => 
-					<TableRow key={index} onClick={() => handleCheckboxChange(index)}>
+					{articles.filter(article => !article.deleted).map((data, index) => 
+					<TableRow key={data.objectid} onClick={() => handleCheckboxChange(index)}>
 						<TableCell><Input type="checkbox" checked={selectedIndexes.has(index)} onChange={() => {}}  className="w-4" /></TableCell>
 						<TableCell>{data.num}</TableCell>
 						<TableCell>{index + 1}</TableCell>
@@ -47,7 +48,7 @@ export default function SequencingEdit({ articles, selectedIndexes, setArticles,
 						<TableCell>{data.label}</TableCell>
 						<TableCell>{data.flag}</TableCell>
 					</TableRow>
-				)}
+					)}
 				</TableBody>
 			</Table>
 		</div>
