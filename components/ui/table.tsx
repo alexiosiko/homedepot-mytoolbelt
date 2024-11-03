@@ -62,13 +62,13 @@ const TableRow = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <motion.tr
   	layout="position"
-  	initial={{ opacity: 0, y: 1 }}
+  	initial={{ opacity: 0, y: -300 }}
 	animate={{ opacity: 1, y: 0 }}
-	exit={{ opacity: 0, y: 1 }}
+	exit={{ opacity: 0, y: 300 }}
 	transition={{ duration: 0.1 }}
     ref={ref}
     className={cn(
-      "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+      "border-b relative transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
       className
     )}
     {...props}

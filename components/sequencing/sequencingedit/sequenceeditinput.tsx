@@ -12,7 +12,8 @@ export default function SequenceInput({ setArticles, selectedIndexes }: {
 	const [input, setInput] = useState<string>("");
 	const { toast } = useToast();
 	const handleHandleUpdateInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const value = e.target.value;
+		let value = e.target.value;
+		
 		// Allow only numeric input, I found this piece of code ONLINE
 		if (/^\d*$/.test(value))
 			setInput(value);
@@ -37,7 +38,21 @@ export default function SequenceInput({ setArticles, selectedIndexes }: {
 		console.log(selectedIndexes);
 		
 
-		if (input === null || input.length != 10) {
+		if (input === null) {
+			toast({
+				duration: 2500,
+				title: "Article input is empty.",
+				variant: "destructive",
+			})
+			return;
+		}
+		let num = input;
+
+		if (num.length == 6)
+			num = "1000" + num; // ex 765045 => 1000765045
+		else if (num.length as number == 7)
+			num = "100" + num; // ex 1765045 => 1001765045
+		else if (num.length != 10) {
 			toast({
 				duration: 2500,
 				title: "Invalid article number.",
@@ -45,9 +60,10 @@ export default function SequenceInput({ setArticles, selectedIndexes }: {
 			})
 			return;
 		}
+
 		const newArticle: ArticleType = {
 			objectid: uuidv4(),
-			num: String(input),
+			num: num,
 			qty: "1",
 			label: "Regular BC",
 			flag: "None",
