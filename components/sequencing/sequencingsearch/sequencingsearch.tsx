@@ -59,7 +59,7 @@ export default function SequencingSearch({ articles, selectedIndexes, setArticle
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{articles.filter(article => !article.deleted).map((data, index) => {
+					{articles.map((data, index) => {
 						// Filter
 						if (input != null && !data.num.includes(String(input)))
 							return;

@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { Dispatch, SetStateAction, useState } from "react"
 import { useToast } from "@/hooks/use-toast"
 import { DialogDescription } from "@radix-ui/react-dialog"
+import { v4 as uuidv4 } from 'uuid';
 
 export default function EditArticles({ data, setData, selectedIndexes, setSelectedIndexes }: {
 	data: ArticleType[];
@@ -34,6 +35,7 @@ export default function EditArticles({ data, setData, selectedIndexes, setSelect
 
 			// Copy
 			const newData: ArticleType = {
+				objectid: uuidv4(),
 				num: d.num,
 				qty: qty == "" ? d.qty : qty,
 				label: label == "" ? d.label : label,

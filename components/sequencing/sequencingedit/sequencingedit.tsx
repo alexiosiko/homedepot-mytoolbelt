@@ -39,7 +39,7 @@ export default function SequencingEdit({ articles, selectedIndexes, setArticles,
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{articles.filter(article => !article.deleted).map((data, index) => 
+					{articles.map((data, index) => 
 					<TableRow key={data.objectid} onClick={() => handleCheckboxChange(index)}>
 						<TableCell><Input type="checkbox" checked={selectedIndexes.has(index)} onChange={() => {}}  className="w-4" /></TableCell>
 						<TableCell>{data.num}</TableCell>

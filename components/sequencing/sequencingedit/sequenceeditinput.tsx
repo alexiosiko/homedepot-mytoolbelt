@@ -51,7 +51,6 @@ export default function SequenceInput({ setArticles, selectedIndexes }: {
 			qty: "1",
 			label: "Regular BC",
 			flag: "None",
-			deleted: false,
 		};
 
 		if (index !== null)

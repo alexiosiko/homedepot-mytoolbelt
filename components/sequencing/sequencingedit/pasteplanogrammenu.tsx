@@ -4,8 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '../../ui/textarea';
 import { ArticleType } from '../hooks/useSequencing';
 import { toast } from '@/hooks/use-toast';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import Image from 'next/image';
+import { v4 as uuidv4 } from 'uuid';
 
 
 export default function PastePlanogramMenu({ articles, setArticles }: { 
@@ -51,6 +50,8 @@ export default function PastePlanogramMenu({ articles, setArticles }: {
 			count++;
 
 			const article: ArticleType = {
+				objectid: uuidv4(),
+				
 				num: value,
 				qty: "1",
 				label: "Regular BC",

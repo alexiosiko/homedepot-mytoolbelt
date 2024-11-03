@@ -7,7 +7,6 @@ export type ArticleType = {
     qty: string;
     label: string;
 	flag: string;
-	deleted: boolean; // This is to handle motiondiv exit animations
 }
 export default function useSequencing() {
 	const [articles, setArticles] = useState<ArticleType[]>(exampleArticles);
