@@ -38,6 +38,7 @@ export default function SequencingSearch({ articles, selectedIndexes, setArticle
 		<div className='w-full'>
 			<div className='flex justify-between sticky top-0 py-4 z-10 bg-background'>
 				<Input 
+				 	className='mr-2'
 					value={input} 
 					onChange={handleHandleUpdateInput}
 					placeholder="Enter article number"

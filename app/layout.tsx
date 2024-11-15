@@ -1,21 +1,15 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Space_Grotesk } from 'next/font/google'
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/nav/appsidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const font = Space_Grotesk({
+	subsets: ['latin'],
+	weight: "500"
+})
 
 export const metadata: Metadata = {
   title: "My Day",
@@ -30,14 +24,15 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body
-			className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+			className={`${font.className} antialiased`}
 			>
 			<SidebarProvider>
-				<TooltipProvider>
-				<AppSidebar />
+			<TooltipProvider>
 				<SidebarTrigger />
+			<AppSidebar />
 
-				<main className="w-full">
+				<main className="w-full p-2">
+
 					{children}
 				</main>
 				</TooltipProvider>

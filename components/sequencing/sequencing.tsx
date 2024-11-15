@@ -9,16 +9,26 @@ import useSequencing from "./hooks/useSequencing"
 import SequencingEdit from "./sequencingedit/sequencingedit"
 import SequencingSearch from "./sequencingsearch/sequencingsearch"
 
-export function Sequencing() {
-	const { articles, setSelectedIndexes, setArticles, handleSelectAll, selectedIndexes, handleCheckboxChange } = useSequencing();
+export function Sequencing({
+	articles,
+	setArticles,
+	bayId,
+	setSelectedIndexes,
+	handleSelectAll,
+	handleCheckboxChange,
+	selectedIndexes,
+}: ReturnType<typeof useSequencing>) {
 	return (
-		<Tabs defaultValue="add" className="sm:p-2">
+		<Tabs defaultValue="add">
 			<TabsList className="grid grid-cols-2">
 				<TabsTrigger value="add">Add Article</TabsTrigger>
 				<TabsTrigger value="search">In-Bay Search</TabsTrigger>
 			</TabsList>
+			<p>Bay: {bayId}</p>
 			<TabsContent value="add">
-				<SequencingEdit articles={articles}
+				<SequencingEdit
+					bayId={bayId}
+					articles={articles}
 					handleCheckboxChange={handleCheckboxChange}
 					handleSelectAll={handleSelectAll}
 					selectedIndexes={selectedIndexes}

@@ -6,10 +6,11 @@ import PastePlanogramMenu from './pasteplanogrammenu'
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '../../ui/table'
 import { Input } from '../../ui/input'
 import { ArticleType } from '../hooks/useSequencing'
-import { AnimatePresence } from 'framer-motion'
+import SequencingSave from './sequencingsave'
 
-export default function SequencingEdit({ articles, selectedIndexes, setArticles, setSelectedIndexes, handleSelectAll, handleCheckboxChange}: {
+export default function SequencingEdit({ articles, bayId, selectedIndexes, setArticles, setSelectedIndexes, handleSelectAll, handleCheckboxChange}: {
 	articles: ArticleType[],
+	bayId: string,
 	selectedIndexes: Set<number>,
 	setArticles: React.Dispatch<React.SetStateAction<ArticleType[]>>,
 	setSelectedIndexes: React.Dispatch<React.SetStateAction<Set<number>>>,
@@ -25,12 +26,15 @@ export default function SequencingEdit({ articles, selectedIndexes, setArticles,
 					<EditArticles setSelectedIndexes={setSelectedIndexes} setData={setArticles} data={articles} selectedIndexes={selectedIndexes} />
 					<PastePlanogramMenu setArticles={setArticles} articles={articles}  />
 				</div>
-				<SequencingDelete setArticles={setArticles} selectedIndexes={selectedIndexes} setSelectedIndexes={setSelectedIndexes} />
+				<div className='flex gap-2'>
+					<SequencingSave bayId={bayId} articles={articles} />
+					<SequencingDelete setArticles={setArticles} selectedIndexes={selectedIndexes} setSelectedIndexes={setSelectedIndexes} />
+				</div>
 			</div>
 			<Table>
 				<TableHeader>
 					<TableRow  >
-						<TableHead><Input type="checkbox" className="w-4" onChange={(e) => handleSelectAll(e.target.checked)} /></TableHead>
+						<TableHead><Input type="checkbox"  id='select-all-checkbox' className="w-4" onChange={(e) => handleSelectAll(e.target.checked)} /></TableHead>
 						<TableHead>Article #</TableHead>
 						<TableHead>Seq</TableHead>
 						<TableHead>Qty</TableHead>
@@ -41,7 +45,7 @@ export default function SequencingEdit({ articles, selectedIndexes, setArticles,
 				<TableBody>
 					{articles.map((data, index) => 
 					<TableRow key={data.objectid} onClick={() => handleCheckboxChange(index)}>
-						<TableCell><Input type="checkbox" checked={selectedIndexes.has(index)} onChange={() => {}}  className="w-4" /></TableCell>
+						<TableCell><Input type="checkbox" checked={selectedIndexes.has(index)} onChange={() => {}} className="w-4" /></TableCell>
 						<TableCell>{data.num}</TableCell>
 						<TableCell>{index + 1}</TableCell>
 						<TableCell>{data.qty}</TableCell>

@@ -10,8 +10,18 @@ export default function SequencingDelete({ setArticles, selectedIndexes, setSele
 }) {
 	const handleDelete = () => {
 		try {
-			setArticles((prevArticles) =>
-				prevArticles.filter((_, index) => !selectedIndexes.has(index))
+			setArticles((prevArticles) => {
+				const newArticles = prevArticles.filter((_, index) => !selectedIndexes.has(index));
+				
+				// Disabled select all button manually if we deleted all articles
+				if (newArticles.length == 0) {
+					const checkbox = document.getElementById("select-all-checkbox") as HTMLInputElement;
+					if (checkbox) 
+						checkbox.checked = false;
+					
+				}
+				return newArticles;
+			}
 			);
 			toast({
 				title: `Successfully deleted ${selectedIndexes.size} articles.`,
@@ -29,11 +39,11 @@ export default function SequencingDelete({ setArticles, selectedIndexes, setSele
 		}
 
 	}
-  return (
-	<Button variant="destructive" disabled={selectedIndexes.size == 0
-	} onClick={handleDelete}>
-		Delete
-	</Button>
+	return (
+		<Button variant="destructive" disabled={selectedIndexes.size == 0
+		} onClick={handleDelete}>
+			Delete
+		</Button>
 
 )
 

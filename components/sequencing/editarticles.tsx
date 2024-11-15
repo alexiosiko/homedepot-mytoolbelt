@@ -93,7 +93,7 @@ export default function EditArticles({ data, setData, selectedIndexes, setSelect
 					</Label>
 					<Select onValueChange={(value) => setLabel(value)} value={label}>
 						<SelectTrigger >
-							<SelectValue placeholder="Select a fruit" />
+							<SelectValue placeholder="Select a Label Type" />
 						</SelectTrigger>
 						<SelectContent>
 							<SelectGroup>
