@@ -27,14 +27,14 @@ export default function RootLayout({
 			className={`${font.className} antialiased`}
 			>
 			<SidebarProvider>
-			<TooltipProvider>
-			<SidebarTrigger />
-			<AppSidebar />
+				<TooltipProvider>
+				<SidebarTrigger />
+				<AppSidebar />
 
-				<main className="w-full p-2">
+					<main className="w-full p-2">
 
-					{children}
-				</main>
+						{children}
+					</main>
 				</TooltipProvider>
 			</SidebarProvider>
 			<Toaster />
