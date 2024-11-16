@@ -21,6 +21,7 @@ export default function Page({
 		try {
 			// Use a proxy to fetch article data from homedepot servers to avoid CORS error
 			const articleNum = (await params).articleNumber;
+			// const url = `https://www.homedepot.ca/product${articleNum}`;
 			const url = `https://www.homedepot.ca/api/productsvc/v1/products/${articleNum}/store/7047`;
 			const res = await axios.get(`/api/proxy`, {
 				params: { url }
@@ -57,9 +58,28 @@ export default function Page({
 		} finally {
 		}
 	}
+	const test = async () => {
+		try {
+			// Use a proxy to fetch article data from homedepot servers to avoid CORS error
+			const articleNum = (await params).articleNumber;
+			const url = `https://www.homedepot.ca/product/${articleNum}`;
+			const res = await axios.get(`/api/scrape`, {
+				params: { url }
+			})
+			console.log(res.data);
+		} catch (e: any) {
+			console.error("error");
+			toast({
+				title: "Error fetching pricing and stock data ...",
+				description: e.message,
+				variant: 'destructive',
+			});
+		} 
+	}
 	useEffect(() => {
 		fetchProductData();
 		fetchPricingAndStockData();
+		// test();
 	}, [])
 
 
