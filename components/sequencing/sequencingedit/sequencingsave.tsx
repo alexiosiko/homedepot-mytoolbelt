@@ -18,7 +18,10 @@ export default function SequencingSave({ bayId, articles }: {
 				handleDelete();
 			else
 				handleUpdate();
-			
+			toast({
+				title: "Bay saved.",
+				duration: 2000
+			})
 		} catch (e) {
 			console.error(e);
 			toast({
@@ -28,10 +31,6 @@ export default function SequencingSave({ bayId, articles }: {
 			});
 		} finally {
 			setSaving(false);
-			toast({
-				title: "Bay saved.",
-				duration: 2000
-			})
 		}
 
 	}

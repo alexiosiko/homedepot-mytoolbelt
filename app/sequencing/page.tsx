@@ -48,7 +48,7 @@ export default function Page() {
 	<div>
 		<div className='flex gap-2 items-center mx-auto justify-center'>
 			<h1>Enter Bay Id:</h1>
-			<Input className='w-24' value={bayId} onChange={(e) => handleSetBayId(e.target.value)} />
+			<Input onKeyDown={(e) => {if (e.key == "Enter") handleSubmit();}} className='w-24' value={bayId} onChange={(e) => handleSetBayId(e.target.value)} />
 			<Button  onClick={handleSubmit}>Sequence Bay</Button>
 		</div>
 		<div className='flex gap-2 mt-4 items-center'>

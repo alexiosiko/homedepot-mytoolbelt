@@ -28,7 +28,7 @@ export default function RootLayout({
 			>
 			<SidebarProvider>
 			<TooltipProvider>
-				<SidebarTrigger />
+			<SidebarTrigger />
 			<AppSidebar />
 
 				<main className="w-full p-2">

@@ -4,6 +4,7 @@ import { Input } from '../../ui/input'
 import { Button } from '../../ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { v4 as uuidv4 } from 'uuid';
+import { formatArticleNumber } from '@/lib/utils';
 
 export default function SequenceInput({ setArticles, selectedIndexes }: {
 	selectedIndexes: Set<number>,
@@ -21,64 +22,57 @@ export default function SequenceInput({ setArticles, selectedIndexes }: {
 	};
 
 	const handleInsert = () => {
-		if (selectedIndexes.size > 1) {
-			toast({ 
-				duration: 2500,
-				title: "Cannot have multiple articles selected when inserting an article.",
-				variant: "destructive",
-			})
-			return;
-		}
-		// Get first value IF EXISTS.
-		// This is to insert an article at a given index
-		let index = null;
-		if (selectedIndexes.size == 1)
-			index = Array.from(selectedIndexes)[0];
+		try {
+			if (selectedIndexes.size > 1) {
+				toast({ 
+					duration: 2500,
+					title: "Cannot have multiple articles selected when inserting an article.",
+					variant: "destructive",
+				})
+				return;
+			}
+			// Get first value IF EXISTS.
+			// This is to insert an article at a given index
+			let index = null;
+			if (selectedIndexes.size == 1)
+				index = Array.from(selectedIndexes)[0];
 
-		console.log(selectedIndexes);
-		
 
-		if (input === null) {
+			if (input === null) {
+				toast({
+					duration: 2500,
+					title: "Article input is empty.",
+					variant: "destructive",
+				})
+				return;
+			}
+			let num = formatArticleNumber(input);
+			const newArticle: ArticleType = {
+				objectid: uuidv4(),
+				num: num,
+				qty: "1",
+				label: "Regular BC",
+				flag: "None",
+			};
+
+			if (index !== null)
+				insertArticleAtIndex(newArticle, index);
+			else
+				insertArticleToEnd(newArticle);
+
+			setInput("");
 			toast({
 				duration: 2500,
-				title: "Article input is empty.",
-				variant: "destructive",
+				title: "Successfully added article."
 			})
-			return;
-		}
-		let num = input;
-
-		if (num.length == 6)
-			num = "1000" + num; // ex 765045 => 1000765045
-		else if (num.length as number == 7)
-			num = "100" + num; // ex 1765045 => 1001765045
-		else if (num.length != 10) {
+		} catch (e: any ) {
 			toast({
 				duration: 2500,
-				title: "Invalid article number.",
+				title: e.message,
 				variant: "destructive",
 			})
 			return;
 		}
-
-		const newArticle: ArticleType = {
-			objectid: uuidv4(),
-			num: num,
-			qty: "1",
-			label: "Regular BC",
-			flag: "None",
-		};
-
-		if (index !== null)
-			insertArticleAtIndex(newArticle, index);
-		else
-			insertArticleToEnd(newArticle);
-
-		setInput("");
-		toast({
-			duration: 2500,
-			title: "Successfully added article."
-		})
 	};
 	const insertArticleAtIndex = (article: ArticleType, index: number) => {
 		setArticles((prevArticles) => {

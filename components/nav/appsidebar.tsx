@@ -1,4 +1,4 @@
-import { Home, Package, Edit } from "lucide-react"
+import { Home, Package, Edit, Search } from "lucide-react"
 
 import {
   Sidebar,
@@ -20,18 +20,23 @@ const items = [
 	  url: "/",
 	  icon: Home,
 	},
-  {
-    title: "Sequencing",
-    url: "/sequencing",
-    icon: Edit,
-  },
-
-  {
-    title: "Planogram",
-    url: "/files/planogram.pdf",
-    icon: Package,
-  },
-
+	{
+		title: "Sequencing",
+		url: "/sequencing",
+		icon: Edit,
+	},
+	
+	{
+		title: "Planogram",
+		url: "/files/planogram.pdf",
+		icon: Package,
+	},
+	{
+	  title: "Article Lookup",
+	  url: "/article",
+	  icon: Search,
+	},
+	
 ]
 
 export function AppSidebar() {

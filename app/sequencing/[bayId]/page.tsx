@@ -44,16 +44,14 @@ export default function Page({ params }: {
 		getBay();
 	}, []);
 	return (
-		<div>
-			<Sequencing
-				setBayId={setBayId}
-				bayId={bayId}
-				articles={articles}
-				setArticles={setArticles}
-				setSelectedIndexes={setSelectedIndexes}
-				handleSelectAll={handleSelectAll}
-				handleCheckboxChange={handleCheckboxChange}
-				selectedIndexes={selectedIndexes}/>
-		</div>
+		<Sequencing
+			setBayId={setBayId}
+			bayId={bayId}
+			articles={articles}
+			setArticles={setArticles}
+			setSelectedIndexes={setSelectedIndexes}
+			handleSelectAll={handleSelectAll}
+			handleCheckboxChange={handleCheckboxChange}
+			selectedIndexes={selectedIndexes}/>
 	)
 }
