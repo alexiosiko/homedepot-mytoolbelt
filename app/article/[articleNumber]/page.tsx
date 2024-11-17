@@ -11,6 +11,9 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Rating } from 'react-simple-star-rating'
 import { useRouter } from "next/navigation";
+import { Separator } from "@/components/ui/separator";
+import { examplePricingAndStockData, exmapleProductData } from "@/lib/data";
+import Search from "@/components/article/search";
 
 
 
@@ -20,7 +23,7 @@ export default function Page({
 	params: Promise<{ articleNumber: string }>
 }) {
 	const router = useRouter();
-	const [productData, setProductDAta] = useState<ProductData | null>(null); // productdataexmaple)
+	const [productData, setProductData] = useState<ProductData | null>(null); // productdataexmaple)
 	const [pricingAndStockData, setPricingAndStockData] = useState<PricingAndDataType | null>(null); // ;exmapleprincingandstockdata);
 	const [fetchingError, setFetchingError] = useState<boolean>(false);
 
@@ -28,7 +31,7 @@ export default function Page({
 	// request if failed x amount of times. I needed this because the homedepots
 	// product API sometimes blocks my request.
 	axiosRetry(axios, {
-		retries: 5,
+		retries: 3,
 		retryDelay: axiosRetry.exponentialDelay, // Exponential backoff delay between retries
 		retryCondition: (error: any) => {
 			return axiosRetry.isNetworkOrIdempotentRequestError(error) || error.response?.status != 200;
@@ -40,7 +43,7 @@ export default function Page({
 		const res = await axios.get(`/api/proxy`, { params: { url } });
 		const productData: ProductData = res.data;
 		console.log(productData);
-		setProductDAta(productData);
+		setProductData(productData);
 	}
 
 	const fetchPricingAndStockData = async (articleNumber: string) => {
@@ -55,6 +58,8 @@ export default function Page({
 		const fetchData = async () => {
 			try {
 			const articleNumber = (await params).articleNumber;
+			
+				
 		
 			// Fetch both APIs in parallel with retries
 			await Promise.all([
@@ -74,6 +79,11 @@ export default function Page({
 		fetchData();
 	}, []);
 
+	const setLocalData = () => {
+		setProductData(exmapleProductData);
+		setPricingAndStockData(examplePricingAndStockData);
+		setFetchingError(false);
+	}
 	if (fetchingError)
 		return (
 			<div className="h-screen flex justify-center items-center">
@@ -84,6 +94,9 @@ export default function Page({
 						<li className="ml-4">Home Depot API has blocked our GET requests from their api</li>
 						<li className="ml-4">Article number does not exist</li>
 					</ul>
+					<p>
+						<Button onClick={setLocalData}>Click Here</Button> to use local data 
+					</p>
 				</div>
 			</div>
 		)
@@ -92,7 +105,8 @@ export default function Page({
 
 	return (
 		<div>
-			<div className="flex max-sm:flex-col justify-center gap-4">
+			<Search />
+			<div className="md:flex max-sm:flex-col mt-4 justify-center gap-4">
 				<div className="flex flex-col gap-2">
 					{anchorArticle ? <p className="text-lg font-semibold">{anchorArticle.name}</p> : <Skeleton className="h-10 w-24" /> }
 					<div className="flex gap-2">
@@ -146,27 +160,35 @@ export default function Page({
 								<CardTitle className="text-lg">Delivery</CardTitle>
 							</CardHeader>
 							<CardContent className="flex flex-col gap-4">
-								<p>Get it shipped to your house.</p>
-								<hr />
-								<p>
-									{productData?.inventory.onlineStock.stockLevel} {productData?.inventory.onlineStock.stockLevelStatus} online
-								</p>
-								<p>
-									{productData?.fulfillmentMessages.shipToHome.shippingCostType}
-								</p>
+								{productData ?
+								<>
+									<p>Get it shipped to your house.</p>
+									<Separator />
+									<p>
+										{productData?.inventory.onlineStock.stockLevel} {productData?.inventory.onlineStock.stockLevelStatus} online
+									</p>
+									<p>
+										{productData?.fulfillmentMessages.shipToHome.shippingCostType}
+									</p>
+									</> : <Skeleton className="h-24 w-60" />
+								}
 							</CardContent>
 						</Card>
 						<Card>
 							<CardHeader>
-							<CardTitle className="text-lg">In-Store Pickup</CardTitle>
+								<CardTitle className="text-lg">In-Store Pickup</CardTitle>
 							</CardHeader>
 							<CardContent className="flex flex-col gap-4">
-								<p>Pick up today at your local store.</p>
-								<hr />
-								<p>
+								{productData ?
+									<>
+									<p>Pick up today at your local store.</p>
+									<Separator />
+									<p>
 
-									{productData?.fulfillmentMessages.findInStore.storeStockLevel} in stock at {productData?.aisleBay.storeDisplayName}
-								</p>
+										{productData?.fulfillmentMessages.findInStore.storeStockLevel} in stock at {productData?.aisleBay.storeDisplayName}
+									</p>
+									</>	: <Skeleton className="h-24 w-60" />
+								}
 							</CardContent>
 						</Card>
 					</div>
@@ -174,10 +196,10 @@ export default function Page({
 					Dates and fees are estimates. See exact dates and fees during
 					checkout.
 					</p>
-				<Button>Add to Cart</Button>
+				{productData ? <Button>Add to Cart</Button> : <Skeleton className="w-full h-8" />}
 				</div>
 			</div>
-			<div className="flex gap-2 mt-12">
+			<div className="flex gap-2 mt-12 justify-center">
 				{pricingAndStockData?.supportingArticles?.map(article =>
 					<Card key={article.code} className="w-72 hover:cursor-pointer" onClick={() => router.push(`/article/${article.code}`)}>
 						<CardHeader>
@@ -185,7 +207,7 @@ export default function Page({
 						</CardHeader>
 						<CardContent className="flex">
 							<Image src={article.images[0].url} alt={article.images[0].altText} width={100} height={100} />
-							<div>
+							<div >
 								<p>{article.modelNumber}</p>
 								<p>{article.code}</p>
 								<p>{article.manufacturer}</p>
@@ -199,160 +221,3 @@ export default function Page({
 }
 
 
-const productdataexmaple = {
-	"productId": "1001099459",
-	"storeId": "7047",
-	"unitOfMeasureCode": "EA",
-	"optimizedPrice": {
-		"productId": "1001099459",
-		"storeId": "7047",
-		"unitOfMeasureCode": "EA",
-		"displayPrice": {
-			"currencyIso": "CAD",
-			"value": 59.98,
-			"formattedValue": "$59.98",
-			"unitOfMeasureCode": "EA",
-			"unitOfMeasure": "each"
-		},
-		"lpc": false,
-		"productStatus": "LA"
-	},
-	"storeStock": {
-		"stockLevelStatus": "inStock",
-		"stockLevel": 12
-	},
-	"onlineStock": {
-		"stockLevelStatus": "inStock",
-		"stockLevel": 25
-	},
-	"aisleBay": {
-		"productCode": "1001099459",
-		"storeId": "7047",
-		"storeDisplayName": "BURNABY",
-		"bayLocation": "001",
-		"aisleLocation": "15"
-	},
-	"badges": [],
-	"tags": [],
-	"showZwas": false,
-	"bopis": true,
-	"boss": true,
-	"buyable": true,
-	"buyNow": true,
-	"id": "1001099459-7047",
-	"isFromSap": false,
-	"shipToHome": true,
-	"isBopisOutOfAreaEnabled": true,
-	"promotionMessages": {},
-	"bodfs": true,
-	"isOnlineLocalized": false,
-	"isOnlineLocalizedToGivenStore": false,
-	"fulfillmentMessages": {
-		"addToCart": "enabled",
-		"findInStore": {
-			"displayStatus": "inStockAt",
-			"storeStockLevel": 12
-		},
-		"shipToHome": {
-			"availableForATC": true,
-			"displayStatus": "inStock",
-			"shippingCostType": "freeShipping",
-			"curbsideDelivery": false
-		},
-		"bopis": {
-			"availableForATC": true,
-			"displayStatus": "pickUpToday"
-		},
-		"boss": {
-			"availableForATC": false,
-			"displayStatus": "hidden"
-		},
-		"express": {
-			"availableForATC": true,
-			"displayStatus": "scheduledDelivery"
-		}
-	},
-	"inventory": {
-		"storeStock": {
-			"stockLevel": 12,
-			"stockLevelStatus": "inStock",
-			"soc": "3"
-		},
-		"onlineStock": {
-			"stockLevel": 25,
-			"stockLevelStatus": "inStock",
-			"soc": "3"
-		}
-	},
-}
-
-const exmapleprincingandstockdata = {
-	"anchorArticle": {
-	"manufacturer": "Milwaukee Tool",
-	"code": "1001099459",
-	"name": "22 oz. Milled Face Framing Hammer",
-	"url": "/product/milwaukee-tool-22-oz-milled-face-framing-hammer/1001099459",
-	"modelNumber": "48-22-9022",
-	"images": [
-		{
-		"imageType": "PRIMARY",
-		"format": "desktop",
-		"url": "https://images.homedepot.ca/productimages/p_1001099459.jpg",
-		"altText": "22 oz. Milled Face Framing Hammer",
-		"code": "p_1001099459"
-		}
-	],
-	"optimizedPrice": {
-		"productId": "1001099459",
-		"storeId": "7047",
-		"displayPrice": {
-		"currencyIso": "CAD",
-		"value": 59.98,
-		"formattedValue": "$59.98",
-		"unitOfMeasure": "each",
-		"unitOfMeasureCode": "EA"
-		},
-		"productStatus": "LA",
-		"lpc": false
-	},
-	"ratings": 4.7324,
-	"reviews": 370,
-	"articleType": "Z001",
-	"admsLiteEligible": false
-	},
-	"supportingArticles": [
-	{
-		"manufacturer": "Milwaukee Tool",
-		"code": "1001581870",
-		"name": "12 -inch Nail Puller with Dimpler",
-		"url": "/product/milwaukee-tool-12-inch-nail-puller-with-dimpler/1001581870",
-		"modelNumber": "48-22-9032",
-		"images": [
-		{
-			"imageType": "PRIMARY",
-			"format": "desktop",
-			"url": "https://images.homedepot.ca/productimages/p_1001581870.jpg",
-			"altText": "12 -inch Nail Puller with Dimpler",
-			"code": "48-22-9032_1.jpg"
-		}
-		],
-		"optimizedPrice": {
-		"productId": "1001581870",
-		"storeId": "7047",
-		"displayPrice": {
-			"currencyIso": "CAD",
-			"value": 34.98,
-			"formattedValue": "$34.98",
-			"unitOfMeasure": "each",
-			"unitOfMeasureCode": "EA"
-		},
-		"productStatus": "LA",
-		"lpc": false
-		},
-		"ratings": 4.6289,
-		"reviews": 97,
-		"articleType": "Z001",
-		"admsLiteEligible": false
-	}
-	]
-}

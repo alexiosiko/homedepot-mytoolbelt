@@ -1,5 +1,3 @@
-"use client"
-
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input'
 import { toast } from '@/hooks/use-toast';
@@ -30,7 +28,7 @@ export default function Search() {
 		}
 	}
 	return (
-		<div className='flex gap-4 mb-4 mx-auto'>
+		<div className='flex gap-4 mx-auto max-w-md'>
 			<Input onKeyDown={(e) => {if (e.key == "Enter") handleSubmit();}} value={articleNum} onChange={handleHandleUpdateInput} placeholder='Insert article number ...' />
 			<Button onClick={handleSubmit}>Search</Button>
 		</div>

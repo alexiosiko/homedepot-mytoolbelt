@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
 			);
 		}
 		console.log(url);
-		const response = await axios.get(url, { timeout: 2000 })
+		const response = await axios.get(url, { timeout: 1500 })
 		return NextResponse.json(response.data, { status: 200 });
 	} catch (error: any) {
 		console.error("Error making proxy request:", error.message);
