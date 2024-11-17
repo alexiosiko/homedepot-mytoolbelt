@@ -62,6 +62,6 @@ export default function SequencingSave({ bayId, articles }: {
 		}
 	}
   return (
-	<Button onClick={handleSave} disabled={saving} variant="success">Save</Button>
+	<Button onClick={handleSave} disabled={saving}>Save</Button>
   )
 }

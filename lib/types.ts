@@ -135,3 +135,5 @@ export type PricingAndDataType = {
     anchorArticle: Article;
     supportingArticles: Article[];
 };
+
+
