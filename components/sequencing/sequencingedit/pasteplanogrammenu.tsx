@@ -12,7 +12,6 @@ export default function PastePlanogramMenu({ articles, setArticles }: {
 	setArticles: React.Dispatch<React.SetStateAction<ArticleType[]>>
 }) {
 	const [dialogIsActive, setDialogIsActive] = useState<boolean>(false);
-	// const [input, setInput] = useState<string>(exmaple);
 	const [input, setInput] = useState<string>("");
 	const handlePaste = () => {
 		try {

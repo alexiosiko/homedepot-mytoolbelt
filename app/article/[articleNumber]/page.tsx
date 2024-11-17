@@ -22,7 +22,8 @@ export default function Page({
 	const router = useRouter();
 	const [productData, setProductDAta] = useState<ProductData | null>(null); // productdataexmaple)
 	const [pricingAndStockData, setPricingAndStockData] = useState<PricingAndDataType | null>(null); // ;exmapleprincingandstockdata);
-	
+	const [fetchingError, setFetchingError] = useState<boolean>(false);
+
 	// This is the axios retry library that automatically retries an axios 
 	// request if failed x amount of times. I needed this because the homedepots
 	// product API sometimes blocks my request.
@@ -35,48 +36,57 @@ export default function Page({
 	});
 
 	const fetchProductData = async (articleNumber: string) => {
-		try {
-			const url = `https://www.homedepot.ca/api/productsvc/v1/products/${articleNumber}/store/7047`;
-			const res = await axios.get(`/api/proxy`, { params: { url } });
-			const productData: ProductData = res.data;
-			console.log(productData);
-			setProductDAta(productData);
-		} catch (e: any) {
-			console.error('Error fetching product data:', e.message);
-			toast({
-				title: 'Error fetching product data',
-				description: e.message,
-				variant: 'destructive',
-			});
-		}
-	};
+		const url = `https://www.homedepot.ca/api/productsvc/v1/products/${articleNumber}/store/7047`;
+		const res = await axios.get(`/api/proxy`, { params: { url } });
+		const productData: ProductData = res.data;
+		console.log(productData);
+		setProductDAta(productData);
+	}
 
 	const fetchPricingAndStockData = async (articleNumber: string) => {
-		try {
 		const url = `https://www.homedepot.ca/api/fbtsvc/v1/fbt/products/${articleNumber}/store/7047?checkStockAndPrice=true&lang=en`;
 		const res = await axios.get(`/api/proxy`, { params: { url } });
 		const pricingAndStockData: PricingAndDataType = res.data;
-		// Process the pricingAndStockData as needed
 		setPricingAndStockData(pricingAndStockData);
 		console.log(pricingAndStockData);
-		} catch (e: any) {
-		console.error('Error fetching pricing and stock data:', e.message);
-		toast({
-			title: 'Error fetching pricing and stock data',
-			description: e.message,
-			variant: 'destructive',
-		});
-		}
 	};
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const articleNumber = (await params).articleNumber
-			fetchProductData(articleNumber);
-			fetchPricingAndStockData(articleNumber);
-		}
+			try {
+			const articleNumber = (await params).articleNumber;
+		
+			// Fetch both APIs in parallel with retries
+			await Promise.all([
+				fetchProductData(articleNumber),
+				fetchPricingAndStockData(articleNumber)
+			]);
+			} catch (e: any) {
+			setFetchingError(true);
+			console.error("Error fetching product data:", e.message);
+			toast({
+				title: "Error fetching product data",
+				description: e.message,
+				variant: "destructive"
+			});
+			}
+		};
 		fetchData();
 	}, []);
+
+	if (fetchingError)
+		return (
+			<div className="h-screen flex justify-center items-center">
+				<div>
+					<h1>Error fetching data</h1>
+					<p>2 main reasons for this occurance:</p>
+					<ul className="list-disc">
+						<li className="ml-4">Home Depot API has blocked our GET requests from their api</li>
+						<li className="ml-4">Article number does not exist</li>
+					</ul>
+				</div>
+			</div>
+		)
 	
 	const anchorArticle = pricingAndStockData?.anchorArticle;
 
@@ -168,7 +178,7 @@ export default function Page({
 				</div>
 			</div>
 			<div className="flex gap-2 mt-12">
-				{pricingAndStockData?.supportingArticles.map(article =>
+				{pricingAndStockData?.supportingArticles?.map(article =>
 					<Card key={article.code} className="w-72 hover:cursor-pointer" onClick={() => router.push(`/article/${article.code}`)}>
 						<CardHeader>
 							<CardTitle>{article.name}</CardTitle>
