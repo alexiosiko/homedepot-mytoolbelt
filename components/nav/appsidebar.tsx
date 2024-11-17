@@ -25,18 +25,18 @@ const items = [
 		url: "/sequencing",
 		icon: Edit,
 	},
-	
-	{
-		title: "Planogram",
-		url: "/files/planogram.pdf",
-		icon: Package,
-	},
+
 	{
 	  title: "Article Lookup",
 	  url: "/article",
 	  icon: Search,
 	},
-	
+		
+	{
+		title: "Example Planogram",
+		url: "/files/planogram.pdf",
+		icon: Package,
+	},
 ]
 
 export function AppSidebar() {

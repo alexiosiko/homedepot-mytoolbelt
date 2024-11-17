@@ -30,7 +30,7 @@ export default function Search() {
 		}
 	}
 return (
-	<div className='flex gap-4 mb-4'>
+	<div className='flex gap-4 mb-4 max-w-xl mx-auto'>
 		<Input onKeyDown={(e) => {if (e.key == "Enter") handleSubmit();}} value={articleNum} onChange={handleHandleUpdateInput} placeholder='Insert article number ...' />
 		<Button onClick={handleSubmit}>Search</Button>
 	</div>

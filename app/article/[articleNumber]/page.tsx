@@ -82,7 +82,7 @@ export default function Page({
 
 	return (
 		<div>
-			<div className="flex justify-center gap-4">
+			<div className="flex max-sm:flex-col justify-center gap-4">
 				<div className="flex flex-col gap-2">
 					{anchorArticle ? <p className="text-lg font-semibold">{anchorArticle.name}</p> : <Skeleton className="h-10 w-24" /> }
 					<div className="flex gap-2">
@@ -130,7 +130,7 @@ export default function Page({
 					{productData.aisleBay.aisleLocation}, Bay{" "}
 					{productData.aisleBay.bayLocation}
 					</p> : <Skeleton className="h-4 w-72" /> }
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div className="flex max-lg:flex-col md:grid-cols-2 gap-4">
 						<Card>
 							<CardHeader>
 								<CardTitle className="text-lg">Delivery</CardTitle>

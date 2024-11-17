@@ -6,9 +6,11 @@ export default function Layout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<>
-			<Search />
-			{children}
-		</>
+		<div className="text-center flex justify-center items-center h-screen">
+			<div>
+				<Search />
+				{children}
+			</div>
+		</div>
 	);
 }

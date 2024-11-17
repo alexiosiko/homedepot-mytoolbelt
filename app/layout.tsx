@@ -30,7 +30,6 @@ export default function RootLayout({
 				<TooltipProvider>
 				<SidebarTrigger />
 				<AppSidebar />
-
 					<main className="w-full p-2">
 
 						{children}

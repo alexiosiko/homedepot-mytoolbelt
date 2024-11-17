@@ -16,10 +16,11 @@ export default function PastePlanogramMenu({ articles, setArticles }: {
 	const [input, setInput] = useState<string>("");
 	const handlePaste = () => {
 		try {
-			const count = tryFormatPlanogram();
+			const articles = tryFormatPlanogram();
+			setArticles([...articles]); // Re-render
 			toast({
 				duration: 2500,
-				title: `Successfully pasted ${count} articles.`,
+				title: `Successfully pasted articles.`,
 			});
 			setDialogIsActive(false);
 		} catch (e: unknown) {
@@ -33,8 +34,7 @@ export default function PastePlanogramMenu({ articles, setArticles }: {
 		}
 
 	}	
-	const tryFormatPlanogram = (): number => {
-		let count = 0;
+	const tryFormatPlanogram = (): ArticleType[] => {
 		const values = input.split(" ") // Split input by gaps
 		values.forEach(value => {
 			value = removeAllNaNs(value);
@@ -47,11 +47,8 @@ export default function PastePlanogramMenu({ articles, setArticles }: {
 			else if (value.length != 10) // Not valud
 				return;
 
-			count++;
-
 			const article: ArticleType = {
 				objectid: uuidv4(),
-				
 				num: value,
 				qty: "1",
 				label: "Regular BC",
@@ -60,8 +57,7 @@ export default function PastePlanogramMenu({ articles, setArticles }: {
 
 			articles.push(article);
 		});
-		setArticles([...articles]); // Re-render component
-		return count;
+		return articles;
 	}
   return (
 	<Dialog open={dialogIsActive}>
@@ -72,7 +68,8 @@ export default function PastePlanogramMenu({ articles, setArticles }: {
 			<DialogHeader>
 				<DialogTitle>Paste Planogram Data</DialogTitle>
 				<DialogDescription >
-						Paste planogram from top left of article list (id 1) to bottom right of last h-facing.
+						Click and drag and highlight all the articles on the planogram, then copy and paste into the box below.
+						The articles will automatically be formatted and sequenced into the bay.
 					
 					</DialogDescription>
 			</DialogHeader>
