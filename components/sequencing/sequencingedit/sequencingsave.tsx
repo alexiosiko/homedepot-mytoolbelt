@@ -14,14 +14,20 @@ export default function SequencingSave({ bayId, articles }: {
 	const handleSave = async () => {
 		setSaving(true);
 		try {
-			if (articles.length == 0) 
-				handleDelete();
-			else
-				handleUpdate();
-			toast({
-				title: "Bay saved.",
-				duration: 2000
-			})
+			if (articles.length == 0) {
+				await handleDelete();
+				toast({
+					title: "Bay deleted.",
+					duration: 2000
+				})
+			} 
+			else {
+				await handleUpdate();
+				toast({
+					title: "Bay updated.",
+					duration: 2000
+				})
+			}
 		} catch (e) {
 			console.error(e);
 			toast({
@@ -54,12 +60,8 @@ export default function SequencingSave({ bayId, articles }: {
 			bayId: bayId,
 			articles: articles
 		})
-		if (res.status == 200) {
-			toast({
-				title: "Updated bay.",
-				duration: 2000,
-			})
-		}
+		if (res.status != 200) 
+			throw Error("Bay did not update to database properly.");
 	}
   return (
 	<Button onClick={handleSave} disabled={saving}>Save</Button>
