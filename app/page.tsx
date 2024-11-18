@@ -5,12 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import Highlight from "@/components/ui/highlight";
 import { FaGithub } from "react-icons/fa";
-import { useRouter } from "next/navigation";
 import { CgProfile } from "react-icons/cg";
 
 
 export default function Home() {
-	const router = useRouter();
 	const openInNewWindow = (url: string) => {
 		window.open(url, '_blank', 'noopener,noreferrer');
 	  };
