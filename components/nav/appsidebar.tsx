@@ -12,6 +12,7 @@ import {
   import { Home, Edit, Search } from "lucide-react";
 import { TransitionLink } from "./transitionlink";
 import { IoNewspaperOutline } from "react-icons/io5";
+import Link from "next/link";
 
   const menuItems = [
 	{ title: "Home", url: "/", icon: Home },
@@ -33,10 +34,10 @@ import { IoNewspaperOutline } from "react-icons/io5";
 				{menuItems.map((item) => (
 				  <SidebarMenuItem key={item.title}>
 					<SidebarMenuButton asChild>
-					  <TransitionLink  href={item.url}>
+					  <Link href={item.url}>
 						  <item.icon className="h-5 w-5" />
 						  <span>{item.title}</span>
-					  </TransitionLink>
+					  </Link>
 					</SidebarMenuButton>
 				  </SidebarMenuItem>
 				))}
