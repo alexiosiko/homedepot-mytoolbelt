@@ -61,6 +61,10 @@ export default function Home() {
 						<Badge className="mr-2">Web Scraping</Badge>
 						Utilized Puppeteer to scrape data from the Home Depot website for the Article Lookup functionality.
 					</li>
+					<li>
+						<Badge className="mr-2">Framer-Motion</Badge>
+						For simple animations in the sequencing app.
+					</li>
 					</ul>
 				</CardContent>
 			</Card>
