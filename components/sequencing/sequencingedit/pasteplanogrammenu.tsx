@@ -36,7 +36,7 @@ export default function PastePlanogramMenu({ articles, setArticles }: {
 	const tryFormatPlanogram = (): ArticleType[] => {
 		const values = input.split(" ") // Split input by gaps
 		values.forEach(value => {
-			value = removeAllNaNs(value);
+			value = removeAllNaNsAndBlanks(value);
 
 
 			if (value.length == 6) // 1670445 -> 1001670445
@@ -83,12 +83,13 @@ export default function PastePlanogramMenu({ articles, setArticles }: {
 }
 
 
-const removeAllNaNs = (s: string): string => {
+const removeAllNaNsAndBlanks = (s: string): string => {
 	let newS = "";
 	for (let i = 0; i < s.length; i++) {
 		const c = s[i];
 		if (isNaN(Number(c)))
-			continue;
+			continue; // Skip non numbers
+
 		newS += c;
 	}
 	return newS;

@@ -1,4 +1,4 @@
-import axios from "axios";
+import { ScrapedData } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 import puppeteer from "puppeteer";
 export async function GET(req: NextRequest) {
@@ -42,7 +42,7 @@ export async function GET(req: NextRequest) {
 		console.log("Scraped data: ", scrapedData);
         await browser.close();
 		
-        return NextResponse.json({ data: scrapedData }, { status: 200 });
+        return NextResponse.json({ ...scrapedData }, { status: 200 });
     } catch (error: any) {
 		console.error("Error making proxy request:", error.message);
 		
@@ -59,7 +59,7 @@ export async function GET(req: NextRequest) {
 
 
 // List of classes you want to scrape
-const scrapeConfig: any = {
+const scrapeConfig: ScrapedData = {
 	skuLine: ".hdca-product__description-product-detail-sku",
 	manufactureName: ".hdca-product__description-title-manufacturer",
 	productName: ".hdca-product__description-title-product-name",
@@ -67,4 +67,5 @@ const scrapeConfig: any = {
 	description: ".acl-my--x-small.hdca-text-body--small",
 	stock: ".product-localized-find-in-store-container",
 	modelLine: ".hdca-product__description-product-detail-model",
+	ratingNumber: ".acl-rating__reviews",
 };

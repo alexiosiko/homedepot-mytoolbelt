@@ -2,8 +2,6 @@ import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-
-	
 	try {
 		const url = req.nextUrl.searchParams.get('url');
 		if (!url) {

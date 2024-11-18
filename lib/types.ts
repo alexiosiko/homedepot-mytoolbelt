@@ -137,3 +137,14 @@ export type PricingAndDataType = {
 };
 
 
+
+export type ScrapedData = {
+	skuLine: string | null,
+	manufactureName: string | null,
+	productName: string | null,
+	price: string | null,
+	description: string | null,
+	stock: string | null,
+	modelLine: string | null,
+	ratingNumber:string | null,
+}

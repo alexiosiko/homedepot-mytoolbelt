@@ -1,43 +1,41 @@
 import type { Metadata } from "next";
-import { Space_Grotesk } from 'next/font/google'
+import { Space_Grotesk } from 'next/font/google';
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/nav/appsidebar";
-import { TooltipProvider } from "@/components/ui/tooltip";
 
 const font = Space_Grotesk({
-	subsets: ['latin'],
-	weight: "500"
-})
+subsets: ['latin'],
+weight: "500"
+});
 
 export const metadata: Metadata = {
-  title: "My Day",
-  description: "A simple myday clone created by Alexi",
+title: "MyToolBelt",
+description: "A simple sequencing and article look  clone created by Alexi",
 };
 
 export default function RootLayout({
-  children,
+children,
 }: Readonly<{
-  children: React.ReactNode;
+children: React.ReactNode;
 }>) {
-	return (
-		<html lang="en">
-			<body
-			className={`${font.className} antialiased`}
-			>
-			<SidebarProvider>
-				<TooltipProvider>
+return (
+	<html lang="en">
+	<body className={`${font.className} antialiased`}>
+		<SidebarProvider>
+			<AppSidebar />
+			<div className="flex-1 flex flex-col">
+			<header className="p-2">
 				<SidebarTrigger />
-				<AppSidebar />
-					<main className="w-full p-2">
-
-						{children}
-					</main>
-				</TooltipProvider>
-			</SidebarProvider>
-			<Toaster />
-			</body>
-		</html>
-  );
+			</header>
+			<main className="p-2 w-full">
+				{children}
+			</main>
+			</div>
+		<Toaster />
+		</SidebarProvider>
+	</body>
+	</html>
+);
 }

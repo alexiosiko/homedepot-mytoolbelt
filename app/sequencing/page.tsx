@@ -60,7 +60,7 @@ export default function Page() {
 				
 			</CardHeader>
 			<CardContent>
-				<div className='flex gap-2 mt-4 items-center'>
+				<div className='flex gap-2 mt-4 flex-wrap items-center'>
 					<p className=''>Existing bays:</p>
 						{bayIds ?
 							bayIds.map(id => 

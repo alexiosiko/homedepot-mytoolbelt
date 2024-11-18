@@ -7,6 +7,11 @@ const nextConfig = {
 			hostname: "images.homedepot.ca",
 			pathname: "/productimages/**",
 		  },
+		  {
+			protocol: 'https',
+			hostname: 'images.homedepot.ca',
+			pathname: '/productimages/**',
+		  },
 		],
 	  },
 	async headers() {

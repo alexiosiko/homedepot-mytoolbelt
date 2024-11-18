@@ -9,14 +9,17 @@ import { useRouter } from "next/navigation"
 export default function Page() {
 	const router = useRouter();
   return (
-		<div className="h-screen flex justify-center items-center">
+		<div className="h-screen flex justify-center items-center max-w-xl mx-auto">
 			<Card>
 				<CardHeader>
 					<Search />
 					<h1>Search a product by it's article number</h1>
 				</CardHeader>
 				<CardContent>
-					<p className='text-sm mt-4'>This data is retrieved using Home Depot's product API </p>
+					<p className='text-sm mt-4'>This data is retrieved using 
+						Puppeteer and scraping the data dynamically by using
+						their asynchronous functions that wait for elements to
+						load based on classnames.  </p>
 					<p className="text-sm mt-4">Please note that the GET requests occasionally fail due to Home Depot's API security measures or spam prevention rules.</p>		
 					<Separator />
 					<p>Some example articles:</p>
@@ -26,10 +29,6 @@ export default function Page() {
 						<Button variant="secondary" onClick={() => router.push(`/article/1001629974`)}>1001629974</Button>
 						<Button variant="secondary" onClick={() => router.push(`/article/1000413911`)}>1000413911</Button>
 					</ul>
-					<Separator />
-					<p>
-						<Button onClick={() => router.push("/article/true")}>Click Here</Button>
-					</p>
 				</CardContent>
 			</Card>
 		</div>
