@@ -10,7 +10,6 @@ import {
 	SidebarMenuButton,
   } from "@/components/ui/sidebar";
   import { Home, Edit, Search } from "lucide-react";
-import { TransitionLink } from "./transitionlink";
 import { IoNewspaperOutline } from "react-icons/io5";
 import Link from "next/link";
 
