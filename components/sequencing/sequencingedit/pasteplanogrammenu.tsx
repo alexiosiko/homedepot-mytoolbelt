@@ -34,16 +34,22 @@ export default function PastePlanogramMenu({ articles, setArticles }: {
 
 	}	
 	const tryFormatPlanogram = (): ArticleType[] => {
+		/*
+			Merch Style Facings
+			1 1001592723 Display 1
+			2 1001814681 Display 1
+			-> [ "Merch", "Style", "Facings", "1", "1001592723", "Display", "1", "2", "1001814681", "Display", "1" ]
+		*/
 		const values = input.split(" ") // Split input by gaps
 		values.forEach(value => {
-			value = removeAllNaNsAndBlanks(value);
+			value = removeAllNaNs(value); // 1814681Display -> 1814681
 
 
-			if (value.length == 6) // 1670445 -> 1001670445
+			if (value.length == 6) // 670445 -> 1000670445
 				value = "1000" + value;
-			else if (value.length == 7) // 650203 -> 1000650203
+			else if (value.length == 7) // 1650203 -> 1001650203
 				value = "100" + value;
-			else if (value.length != 10) // Not valud
+			else if (value.length != 10) // 1001650203 // Not valud
 				return;
 
 			const article: ArticleType = {
@@ -83,7 +89,13 @@ export default function PastePlanogramMenu({ articles, setArticles }: {
 }
 
 
-const removeAllNaNsAndBlanks = (s: string): string => {
+/*
+	example input
+		1814681Display
+	example output
+		1814681
+*/
+const removeAllNaNs = (s: string): string => {
 	let newS = "";
 	for (let i = 0; i < s.length; i++) {
 		const c = s[i];

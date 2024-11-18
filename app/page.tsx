@@ -18,8 +18,8 @@ export default function Home() {
 				<CardHeader className="md:flex lg:flex-row justify-center gap-4 items-center">
 					<div >
 						<CardTitle className="text-4xl mb-4 flex gap-2 items-baseline" >Hi! I'm Alexi.
-							<FaGithub className="hover:cursor-pointer" onClick={() => openInNewWindow("https://github.com/alexiosiko/homedepot-mytoolbelt")} size={24} />
-							<CgProfile className="hover:cursor-pointer" onClick={() => openInNewWindow("https://www.alexios.ca/")} size={24} />
+							<FaGithub className="hover:cursor-pointer z-10" onClick={() => openInNewWindow("https://github.com/alexiosiko/homedepot-mytoolbelt")} size={24} />
+							<CgProfile className="hover:cursor-pointer z-10" onClick={() => openInNewWindow("https://www.alexios.ca/")} size={24} />
 						</CardTitle>
 						<p>
 							I wanted to demonstrate my 
@@ -32,8 +32,9 @@ export default function Home() {
 							journey for this program.
 						</p>
 					</div>
-					<iframe loading="eager" className="relative left-8 scale-150 bottom-12 object-contain" src="https://lottie.host/embed/f07f6783-d7a5-4e6e-8c85-60f1920a867c/ecpvQACrMa.json"></iframe>
+					<iframe loading="eager" className="  relative left-12  scale-150 bottom-12 object-contain" src="https://lottie.host/embed/f07f6783-d7a5-4e6e-8c85-60f1920a867c/ecpvQACrMa.json"></iframe>
 				</CardHeader>
+				<iframe width="560" height="315" className="mx-auto mb-4" src="https://www.youtube.com/embed/Uefa2hh3TPg?si=LXxYTo5n0rHsVR6O" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
 				<CardContent>
 					<CardDescription>
 						I also saw an <Highlight>opportunity</Highlight> with the sequencing app. Rather than having to enter each article one by one,

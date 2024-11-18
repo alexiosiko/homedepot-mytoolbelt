@@ -21,9 +21,7 @@ export default function Page({
 	}: {
 	params: Promise<{ articleNumber: string }>
 }) {
-	const router = useRouter();
 	const [scrapedData, setScrapedData] = useState<ScrapedData | undefined>(undefined);
-	const [fetchingError, setFetchingError] = useState<boolean>(false);
 
 	// This is the axios retry library that automatically retries an axios 
 	// request if failed x amount of times. I needed this because the homedepots

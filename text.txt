@@ -1,0 +1,12 @@
+INPUT
+	Merch Style Facings
+	1 1001592723 Display 1
+	2 1001814681 Display 1
+
+values = [ "Merc", "Style", "Facings", "1", "1001592723", "Display", "1", "2", "1001814681", "Display", "1",]
+
+i
+Merc
+
+
+let newS = "";

@@ -9,13 +9,9 @@ export async function GET(req: NextRequest) {
             { status: 400 }
         );
     }
-
-	
-	
     try {
 		const browser = await puppeteer.launch({
 			headless: true,
-           
         });
 		
         const page = await browser.newPage();
