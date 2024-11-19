@@ -1,4 +1,4 @@
-<a href="https://homedepot-mytoolbelt.vercel.app/"><h1>Demo</h1></a>
+<h1><a href="https://homedepot-mytoolbelt.vercel.app/">Demo</a></h1>
 
 I made a simple clone to a simple solution to a simple problem
 
