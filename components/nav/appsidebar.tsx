@@ -16,7 +16,7 @@ import Link from "next/link";
   const menuItems = [
 	{ title: "Home", url: "/", icon: Home },
 	{ title: "Sequencing", url: "/sequencing", icon: Edit },
-	{ title: "Article Lookup", url: "/article", icon: Search },
+	// { title: "Article Lookup", url: "/article", icon: Search },
   ];
   
   export function AppSidebar() {
